@@ -1,0 +1,43 @@
+From d3b26800d530b4248c4a647578da8a9de5194734 Mon Sep 17 00:00:00 2001
+From: Bertrand Martel <bmartel.fr@gmail.com>
+Date: Sun, 10 Sep 2017 02:26:00 +0200
+Subject: [PATCH] disable sim pin code check in keyguard
+
+---
+ packages/Keyguard/src/com/android/keyguard/KeyguardSimPinView.java | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/packages/Keyguard/src/com/android/keyguard/KeyguardSimPinView.java b/packages/Keyguard/src/com/android/keyguard/KeyguardSimPinView.java
+index 5a0fdb2..93b919f 100644
+--- a/packages/Keyguard/src/com/android/keyguard/KeyguardSimPinView.java
++++ b/packages/Keyguard/src/com/android/keyguard/KeyguardSimPinView.java
+@@ -186,6 +186,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
+ 
+         getSimUnlockProgressDialog().show();
+ 
++        /*
+         if (mCheckSimPinThread == null) {
+             mCheckSimPinThread = new CheckSimPin(mPasswordEntry.getText()) {
+                 void onSimCheckResponse(final int result, final int attemptsRemaining) {
+@@ -216,7 +217,7 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
+                                 if (DEBUG) Log.d(LOG_TAG, "verifyPasswordAndUnlock "
+                                         + " CheckSimPin.onSimCheckResponse: " + result
+                                         + " attemptsRemaining=" + attemptsRemaining);
+-                                resetPasswordText(true /* animate */);
++                                resetPasswordText(true);
+                             }
+                             mCallback.userActivity();
+                             mCheckSimPinThread = null;
+@@ -226,6 +227,9 @@ public class KeyguardSimPinView extends KeyguardPinBasedInputView {
+             };
+             mCheckSimPinThread.start();
+         }
++        */
++       KeyguardUpdateMonitor.getInstance(getContext()).reportSimUnlocked();
++       mCallback.dismiss(true);
+     }
+ 
+     @Override
+-- 
+2.5.0
+
