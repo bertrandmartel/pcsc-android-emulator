@@ -1,15 +1,32 @@
 # Smartcard Android Emulator Extension
 
+## Download and run the emulator
+
+* create an avd in Android Studio with system-images 21 x86 named "smartcard"
+
+* download and run the emulator : 
+
+```
+mkdir pcsc-emulator && cd pcsc-emulator
+wget https://github.com/bertrandmartel/pcsc-android-emulator/releases/download/v1.0/emulator.tar.gz
+tar -xvzf emulator.tar.gz && rm emulator.tar.gz
+export ANDROID_SDK_ROOT=~/Android/Sdk #change this
+export LD_LIBRARY_PATH=$PWD/pcsc-lite:$LD_LIBRARY_PATH
+./emulator/emulator @smartcard -verbose -system system.img -pcsc
+```
+
+## Build instructions
+
 Instructions for building and using the emulator extension for smartcard from [seek-for-android instructions](https://github.com/seek-for-android/pool/wiki/EmulatorExtension)
 
-## Init
+### Init
 
 ```bash
 AOSP_DIR=seek-for-android
 PCSC_DIR=~/pcsc-lite
 ```
 
-## Build AOSP
+### Build AOSP
 
 building & patching AOSP
 
@@ -23,7 +40,7 @@ make update-api
 make -j32
 ```
 
-## Build pcsc
+### Build pcsc
 
 ```bash
 mkdir -p $PCSC_DIR && cd $PCSC_DIR
@@ -42,7 +59,7 @@ cd 64lib/pcsc-lite-1.8.22
 CFLAGS="-m64" LDFLAGS="-m64" ./configure; make
 ```
 
-## Build emulator
+### Build emulator
 
 build emulator with pcsc support
 
@@ -56,7 +73,7 @@ export PCSC64_LIBPATH=$PCSC_DIR/64lib/pcsc-lite-1.8.22/src/.libs/
 make -j32
 ```
 
-## run emulator 
+### run emulator 
 
 Prior to the following step, assure to create an avd in Android Studio with system-images 21 x86
 
@@ -74,7 +91,7 @@ If you have to name the reader :
 ./external/qemu/objs/emulator @smartcard -verbose -pcsc "Gemalto Prox Dual USB PC Link Reader [Prox-DU Contact_10800061] 01 00" -system out/target/product/generic_x86/system.img
 ```
 
-## Disable SIM pin code check
+### Disable SIM pin code check
 
 I had some troubles with the SIM pin code keyguard that won't return successfull pincode. Instead it will return "SIM operation failed" and exhaust the pin code retry.
 
@@ -86,9 +103,9 @@ cd frameworks/base
 git apply /path/to/0001-disable-sim-pin-code-check-in-keyguard.patch
 ```
 
-## Troubleshoot
+### Troubleshoot
 
-### no APDU access allowed
+#### no APDU access allowed
 
 * Error encountered : 
 
@@ -132,7 +149,7 @@ Note that this will issue an install for personalization which requires authenti
 
 Note that you will have to restart the emulator to apply those rule (emulator will retrieve all rules at boot)
 
-### iccOpenLogicalChannel failed
+#### iccOpenLogicalChannel failed
 
 * Error encountered : 
 
@@ -145,7 +162,7 @@ Note that you will have to restart the emulator to apply those rule (emulator wi
 
 smartcard has been disconnected
 
-### Secure Element is not presented
+#### Secure Element is not presented
 
 * Error encountered : 
 
