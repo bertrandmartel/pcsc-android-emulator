@@ -2,11 +2,11 @@
 
 ## Download and run the emulator
 
-* create an avd in Android Studio with system-images 21 x86 named "smartcard"
+* create an avd in Android Studio with system image sdk21 x86 named "smartcard"
 
 * download and run the emulator : 
 
-```
+```bash
 mkdir pcsc-emulator && cd pcsc-emulator
 wget https://github.com/bertrandmartel/pcsc-android-emulator/releases/download/v1.0/emulator.tar.gz
 tar -xvzf emulator.tar.gz && rm emulator.tar.gz
@@ -119,7 +119,7 @@ git apply /path/to/0001-disable-sim-pin-code-check-in-keyguard.patch
 
 * Reason
 
-This error occurs because the Access control enforcer refuse to send apdu for your app. You have to add an access rule to authorize your app to send apdu to a specific applet. The rules defines : 
+This error occurs because the Access control enforcer refuses to send apdu for your app. You have to add an access rule to authorize your app to send apdu to a specific applet. A rule defines : 
 * an applet ID
 * a certificate sha1 hash
 * a rule (0x01 for always, 0x00 for never, for more sophisticated rule see access rule spec)
