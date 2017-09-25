@@ -139,10 +139,10 @@ ant -f build.xml
 java -jar gp.jar -acr-list
 ```
 
-* add a rule to authorize apdu for Android app signed with hash `53AC1FC8DB794570D0CF2565DBFBE98C266AE07F` (the debug keystore), with applet id `D2760001180002FF49502589C0019B01` with the rule `ALWAYS` (0x01) :
+* add a rule to authorize apdu for Android app signed with hash `1FA8CC6CE448894C7011E23BCF56DB9BD9097432` (debug keystore), with applet id `D2760001180002FF49502589C0019B01` with the rule `ALWAYS` (0x01) :
 
 ```bash
-java -jar gp.jar -acr-add -app D2760001180002FF49502589C0019B01 -hash 53AC1FC8DB794570D0CF2565DBFBE98C266AE07F -rule 01
+java -jar gp.jar -acr-add -app D2760001180002FF49502589C0019B01 -hash 1FA8CC6CE448894C7011E23BCF56DB9BD9097432 -rule 01
 ```
 
 Note that this will issue an install for personalization which requires authentication (eg setting the right keys)
